@@ -1,17 +1,28 @@
-const canvas = document.querySelector('#canvas');
+function generateRandomNumbers() {
+  const numbers = [];
+  for (let i = 0; i < 3; i++) {
+    const randomNumber = Math.floor(Math.random() * 255);
+    numbers.push(randomNumber);
+  }
+  return numbers;
+}
+console.log();
+const canvas = document.querySelector("#canvas");
 const canvasSizeRate = 0.4;
 const W = innerHeight * canvasSizeRate;
 const H = innerWidth * canvasSizeRate;
 canvas.width = W;
 canvas.height = H;
 const POINT_RADIUS = 1;
-const c = canvas.getContext('2d');
+const c = canvas.getContext("2d");
 const drawPoint = function ({ x, y }) {
   c.beginPath();
   const startAngle = 0; // Starting point on circle
   const endAngle = Math.PI + (Math.PI * 2) / 2; // End point on circle
 
   c.arc(x, y, POINT_RADIUS, startAngle, endAngle);
+  const numbers = generateRandomNumbers();
+  c.fillStyle = `rgb(${numbers[0]},${numbers[1]},${numbers[2]})`;
   c.fill();
 };
 const $1 = { x: W / 2, y: 20 };
@@ -35,6 +46,7 @@ const startDrawing = function () {
   const rp /* random point */ = mainPoints[rn];
   const x = (rp.x + lastPoint.x) / 2;
   const y = (rp.y + lastPoint.y) / 2;
+
   lastPoint = { x, y };
   drawPoint(lastPoint);
 
@@ -44,5 +56,5 @@ const stopDrawing = function () {
   cancelAnimationFrame(animationId);
 };
 
-document.querySelector('#start').addEventListener('click', startDrawing);
-document.querySelector('#stop').addEventListener('click', stopDrawing);
+document.querySelector("#start").addEventListener("click", startDrawing);
+document.querySelector("#stop").addEventListener("click", stopDrawing);
